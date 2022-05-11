@@ -8,13 +8,26 @@ const {
   deleteUsers,
   pacthUsers,
 } = require("../controllers/users.controller");
-const { validRole, emailExist } = require("../helpers/db-validators");
+const {
+  validRole,
+  emailExist,
+  userExistById,
+} = require("../helpers/db-validators");
 const { validarCampos } = require("../middlewares/validar-campos");
 
 const router = Router();
 
 router.get("/", getUsers);
-router.put("/:id", putUsers);
+router.put(
+  "/:id",
+  [
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(userExistById),
+    check("rol").custom(validRole),
+    validarCampos,
+  ],
+  putUsers
+);
 router.post(
   "/",
   [
