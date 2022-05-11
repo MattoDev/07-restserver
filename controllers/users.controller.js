@@ -1,4 +1,5 @@
 const { response, request } = require("express");
+const Usuario = require("../models/usuario");
 
 const getUsers = (req = request, res = response) => {
   const { q, nombre = "no name", apikey, page = 10, limit } = req.query;
@@ -12,12 +13,13 @@ const getUsers = (req = request, res = response) => {
   });
 };
 
-const postUsers = (req, res = response) => {
-  const { nombre, edad } = req.body;
+const postUsers = async (req, res = response) => {
+  const body = req.body;
+  const usuario = new Usuario(body); //Creacion de la instancia
+  await usuario.save(); //grabar el registro
   res.json({
     msg: "post API - controlador",
-    nombre,
-    edad,
+    usuario,
   });
 };
 
