@@ -7,6 +7,7 @@ const {
   deleteUsers,
   pacthUsers,
 } = require("../controllers/users.controller");
+const { validarCampos } = require("../middlewares/validar-campos");
 
 const router = Router();
 
@@ -14,7 +15,18 @@ router.get("/", getUsers);
 router.put("/:id", putUsers);
 router.post(
   "/",
-  [check("correo", "el correo no es valido").isEmail()],
+  [
+    check("nombre", "el nombre es obligatorio").not().isEmpty(),
+    check("password", "el password debe de ser mas de 6 letras").isLength({
+      min: 6,
+    }),
+    check("correo", "el correo no es valido").isEmail(),
+    check("rol", "No es un rol valido o permitido").isIn(
+      "ADMIN_ROLE",
+      "USER_ROLE"
+    ),
+    validarCampos,
+  ],
   postUsers
 );
 router.delete("/", deleteUsers);
