@@ -5,10 +5,15 @@ const Usuario = require("../models/usuario");
 const getUsers = async (req = request, res = response) => {
   // const { q, nombre = "no name", apikey, page = 10, limit } = req.query;
   const { limit = 5, desde = 0 } = req.query;
-  const usuarios = await Usuario.find()
-    .skip(Number(desde))
-    .limit(Number(limit));
+  const query = { estado: true };
+
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments(query),
+    Usuario.find(query).skip(Number(desde)).limit(Number(limit)),
+  ]);
+
   res.json({
+    total,
     usuarios,
   });
 };
@@ -40,9 +45,16 @@ const putUsers = async (req, res = response) => {
     usuario,
   });
 };
-const deleteUsers = (req, res = response) => {
+const deleteUsers = async (req, res = response) => {
+  const { id } = req.params;
+  //Fisicamente lo borramos
+  // const usuario = await Usuario.findByIdAndDelete(id);
+
+  //Como se debe hacer el borrado
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+
   res.json({
-    msg: "delete API - controlador",
+    usuario,
   });
 };
 const pacthUsers = (req, res = response) => {
