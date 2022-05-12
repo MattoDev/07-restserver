@@ -6,6 +6,7 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
     this.usersPath = "/api/users";
+    this.authPath = "/api/auth";
     //Concetar a base de datos
     this.conectarDB();
     //Middleware : funciones que van a añadirle otra funcionalidad a mi webServer
@@ -28,6 +29,7 @@ class Server {
     this.app.use(express.static("public"));
   }
   routes() {
+    this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.usersPath, require("../routes/user"));
   }
 
