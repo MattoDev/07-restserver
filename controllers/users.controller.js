@@ -2,15 +2,14 @@ const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuario");
 
-const getUsers = (req = request, res = response) => {
-  const { q, nombre = "no name", apikey, page = 10, limit } = req.query;
+const getUsers = async (req = request, res = response) => {
+  // const { q, nombre = "no name", apikey, page = 10, limit } = req.query;
+  const { limit = 5, desde = 0 } = req.query;
+  const usuarios = await Usuario.find()
+    .skip(Number(desde))
+    .limit(Number(limit));
   res.json({
-    msg: "get API - controlador",
-    q,
-    nombre,
-    apikey,
-    page,
-    limit,
+    usuarios,
   });
 };
 
@@ -27,32 +26,25 @@ const postUsers = async (req, res = response) => {
     usuario,
   });
 };
-
 const putUsers = async (req, res = response) => {
   const { id } = req.params;
   const { _id, password, google, correo, ...resto } = req.body;
-
   //TODO validar contra base de datos
   if (password) {
     //Encriptar contraseña
     const salt = bcryptjs.genSaltSync();
     resto.password = bcryptjs.hashSync(password, salt);
   }
-
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
-
   res.json({
-    msg: "put API - controlador",
     usuario,
   });
 };
-
 const deleteUsers = (req, res = response) => {
   res.json({
     msg: "delete API - controlador",
   });
 };
-
 const pacthUsers = (req, res = response) => {
   res.json({
     msg: "patch API - controlador",
