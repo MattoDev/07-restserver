@@ -47,16 +47,12 @@ const putUsers = async (req, res = response) => {
 };
 const deleteUsers = async (req, res = response) => {
   const { id } = req.params;
-  const uid = req.uid;
-  //Fisicamente lo borramos
-  // const usuario = await Usuario.findByIdAndDelete(id);
 
   //Como se debe hacer el borrado
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
   res.json({
     usuario,
-    uid,
   });
 };
 const pacthUsers = (req, res = response) => {
