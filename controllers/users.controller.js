@@ -47,6 +47,7 @@ const putUsers = async (req, res = response) => {
 };
 const deleteUsers = async (req, res = response) => {
   const { id } = req.params;
+  const uid = req.uid;
   //Fisicamente lo borramos
   // const usuario = await Usuario.findByIdAndDelete(id);
 
@@ -55,6 +56,7 @@ const deleteUsers = async (req, res = response) => {
 
   res.json({
     usuario,
+    uid,
   });
 };
 const pacthUsers = (req, res = response) => {
