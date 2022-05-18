@@ -5,8 +5,13 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    this.usersPath = "/api/users";
-    this.authPath = "/api/auth";
+
+    this.paths = {
+      auth: "/api/auth",
+      users: "/api/users",
+      categorias: "/api/categorias",
+    };
+
     //Concetar a base de datos
     this.conectarDB();
     //Middleware : funciones que van a añadirle otra funcionalidad a mi webServer
@@ -29,8 +34,9 @@ class Server {
     this.app.use(express.static("public"));
   }
   routes() {
-    this.app.use(this.authPath, require("../routes/auth"));
-    this.app.use(this.usersPath, require("../routes/user"));
+    this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.users, require("../routes/user"));
+    this.app.use(this.paths.categorias, require("../routes/categorias"));
   }
 
   lister() {
