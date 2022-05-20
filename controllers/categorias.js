@@ -1,6 +1,31 @@
 const { response } = require("express");
 const { Categoria } = require("../models");
 
+//ObtenerCategorias - Paginado - total - populate
+const obtenerCategorias = async (req, res = response) => {
+  const { limit = 5, desde = 0 } = req.query;
+  const query = { estado: true };
+
+  const [total, categorias] = await Promise.all([
+    Categoria.countDocuments(query),
+    Categoria.find(query)
+      .populate("usuario", "nombre")
+      .skip(Number(desde))
+      .limit(Number(limit)),
+  ]);
+
+  res.json({
+    total,
+    categorias,
+  });
+};
+
+const obtenerCategoria = async (req, res = response) => {
+  const { id } = req.params;
+  const categoria = await Categoria.findById(id).populate("usuario", "nombre");
+  res.json(categoria);
+};
+
 const crearCategoria = async (req, res = response) => {
   const nombre = req.body.nombre.toUpperCase();
   const categoriaDB = await Categoria.findOne({ nombre });
@@ -21,6 +46,12 @@ const crearCategoria = async (req, res = response) => {
   res.status(201).json(categoria);
 };
 
+//ActualizarCategoria
+
+//borrarCategoria - estado:false
+
 module.exports = {
   crearCategoria,
+  obtenerCategorias,
+  obtenerCategoria,
 };
