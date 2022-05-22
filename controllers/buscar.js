@@ -1,7 +1,8 @@
 const { response } = require("express");
 
 const buscar = (req, res = response) => {
-  res.json({ msg: "...Buscar" });
+  const { coleccion, termino } = req.params;
+  res.json({ coleccion, termino });
 };
 
 module.exports = {
