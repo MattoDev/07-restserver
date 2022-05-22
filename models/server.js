@@ -10,6 +10,7 @@ class Server {
       auth: "/api/auth",
       users: "/api/users",
       categorias: "/api/categorias",
+      productos: "/api/productos",
     };
 
     //Concetar a base de datos
@@ -37,6 +38,7 @@ class Server {
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.users, require("../routes/user"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
+    this.app.use(this.paths.productos, require("../routes/productos"));
   }
 
   lister() {
