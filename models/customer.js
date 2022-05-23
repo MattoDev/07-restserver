@@ -16,7 +16,7 @@ const CustomerSchema = Schema({
 });
 
 CustomerSchema.methods.toJSON = function () {
-  const { data } = this.toObject();
+  const data  = this.toObject();
 
   return data;
 };
