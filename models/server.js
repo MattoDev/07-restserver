@@ -10,7 +10,11 @@ class Server {
       auth: "/api/auth",
       users: "/api/users",
       categorias: "/api/categorias",
+<<<<<<< HEAD
       productos: "/api/productos",
+=======
+      customers: "/api/customers",
+>>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
       buscar: "/api/buscar",
     };
 
@@ -39,7 +43,11 @@ class Server {
     this.app.use(this.paths.auth, require("../routes/auth"));
     this.app.use(this.paths.users, require("../routes/user"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
+<<<<<<< HEAD
     this.app.use(this.paths.productos, require("../routes/productos"));
+=======
+    this.app.use(this.paths.customers, require("../routes/customers"));
+>>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
     this.app.use(this.paths.buscar, require("../routes/buscar"));
   }
 

@@ -1,8 +1,21 @@
 const { response } = require("express");
+<<<<<<< HEAD
 const { Usuario, Categoria, Producto } = require("../models");
 const { ObjectId } = require("mongoose").Types;
 
 const coleccionesPermitidas = ["usuarios", "categoria", "productos", "roles"];
+=======
+const { Usuario, Categoria, Producto, Customer } = require("../models");
+const { ObjectId } = require("mongoose").Types;
+
+const coleccionesPermitidas = [
+  "usuarios",
+  "categoria",
+  "productos",
+  "roles",
+  "customer",
+];
+>>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
 
 const buscarUsuarios = async (termino = "", res = response) => {
   const esMongoID = ObjectId.isValid(termino);
@@ -46,6 +59,25 @@ const buscarProducto = async (termino = "", res = response) => {
   }).populate("categoria", "nombre");
   res.json({ results: productos });
 };
+<<<<<<< HEAD
+=======
+
+const buscarCustomers = async (termino = "", res = response) => {
+    // const esMongoID = ObjectId.isValid(termino);
+    // if (esMongoID) {
+    //   const customer = await Customer.findById(termino);
+    //   return res.json({ results: customer ? [customer] : [] });
+    // }
+  
+    const regex = new RegExp(termino, "i");
+    
+    const customer = await Customer.find({
+      $or: [{ phone: regex }, { email: regex }, { company: regex }]
+      
+    });
+    res.json({ results: customer });
+  };
+>>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
 const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
   if (!coleccionesPermitidas.includes(coleccion)) {
@@ -63,6 +95,12 @@ const buscar = (req, res = response) => {
     case "productos":
       buscarProducto(termino, res);
       break;
+<<<<<<< HEAD
+=======
+      case "customer":
+        buscarCustomers(termino, res)
+        break
+>>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
     default:
       res.status(500).json({
         msg: "Se le olvido hacer esta busqueda",
