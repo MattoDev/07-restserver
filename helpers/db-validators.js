@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const { Categoria, Usuario, Producto } = require("../models");
-=======
-const { Categoria, Usuario, Customer } = require("../models");
->>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
 const Role = require("../models/role");
 
 const validRole = async (rol = "") => {
@@ -21,7 +17,7 @@ const emailExist = async (correo = "") => {
 };
 
 const emailCustomer = async (email = "") => {
-  console.log(email)
+  console.log(email);
   //Verificar si el correo existe
   const emailExist = await Customer.findOne({ email });
   if (emailExist) {
@@ -29,14 +25,14 @@ const emailCustomer = async (email = "") => {
   }
 };
 const phoneCustomer = async (phone = "") => {
-  console.log("Hola Mundo")
+  console.log("Hola Mundo");
   //Verificar si el correo existe
-  console.log(phone)
+  console.log(phone);
 
   const phoneExist = await Customer.findOne({ phone });
   if (phoneExist) {
     throw new Error(`El telefono: ${phone}, ya esta registrado`);
-  } 
+  }
 };
 
 const userExistById = async (id) => {
@@ -68,10 +64,5 @@ module.exports = {
   emailExist,
   userExistById,
   existeCategoriaPorId,
-<<<<<<< HEAD
   existeProductoPorId,
-=======
-  emailCustomer,
-  phoneCustomer
->>>>>>> d6511db5eee0a788936809ccfb833a4140acbcd6
 };
