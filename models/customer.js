@@ -8,6 +8,7 @@ const CustomerSchema = Schema({
   },
   email: {
     type: String,
+    required: [true, "El correo es obligatorio"],
     unique: true,
   },
   company: {
@@ -16,7 +17,7 @@ const CustomerSchema = Schema({
 });
 
 CustomerSchema.methods.toJSON = function () {
-  const data  = this.toObject();
+  const { __v, _id, ...data } = this.toObject();
 
   return data;
 };

@@ -61,6 +61,7 @@ const buscarCustomers = async (termino = "", res = response) => {
     // }
   
     const regex = new RegExp(termino, "i");
+    
     const customer = await Customer.find({
       $or: [{ phone: regex }, { email: regex }, { company: regex }]
       
